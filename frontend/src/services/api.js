@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://ticket-repository.onrender.com/api";
 
 const request = async (url, options = {}) => {
   const token = localStorage.getItem("token");
@@ -17,7 +17,13 @@ const request = async (url, options = {}) => {
     headers
   });
 
-  const data = await response.json();
+  let data;
+
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
+  }
 
   if (!response.ok) {
     throw new Error(data.message || "Something went wrong");
@@ -26,7 +32,8 @@ const request = async (url, options = {}) => {
   return data;
 };
 
-// AUTH
+// ==================== AUTH ====================
+
 export const registerUser = async (userData) => {
   return request("/auth/register", {
     method: "POST",
@@ -41,7 +48,8 @@ export const loginUser = async (userData) => {
   });
 };
 
-// TICKETS
+// ==================== TICKETS ====================
+
 export const getTickets = async () => {
   return request("/tickets");
 };
@@ -70,7 +78,8 @@ export const deleteTicket = async (id) => {
   });
 };
 
-// COMMENTS
+// ==================== COMMENTS ====================
+
 export const getComments = async (ticketId) => {
   return request(`/tickets/${ticketId}/comments`);
 };
