@@ -1,4 +1,4 @@
-const API_URL = "https://ticket-repository.onrender.com/api";
+const API_URL = "/api";
 
 const request = async (url, options = {}) => {
   const token = localStorage.getItem("token");
