@@ -24,10 +24,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/tickets", commentRoutes);
 
-// Port
-const PORT = process.env.PORT || 5000;
+// Start server when running locally
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
 
-// Start server
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+// Export app for Vercel
+module.exports = app;
